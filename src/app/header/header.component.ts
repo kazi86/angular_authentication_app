@@ -36,8 +36,7 @@ export class HeaderComponent implements OnInit,OnDestroy{
   }
 
   onLogout(){
-    this.authSvc.user.next(null);
-    this.router.navigate(['/auth']);
+    this.authSvc.logout();
   }
 
   ngOnDestroy(){
