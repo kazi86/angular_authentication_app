@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthResponseData, AuthService} from './auth.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls:['./auth.component.css']
 })
-export class AuthComponent {
+export class AuthComponent{
 
   isLoginMode: boolean = true;
 
@@ -16,7 +17,7 @@ export class AuthComponent {
 
   error: string;
 
-  constructor(private authSvc : AuthService) {}
+  constructor(private authSvc : AuthService,private router:Router) {}
 
   onSwitchMode(){
 
@@ -52,6 +53,8 @@ export class AuthComponent {
 
         let data = result;
 
+        this.router.navigate(['/recipes']);
+
       },
       error:(errResponse)=>{
 
@@ -68,6 +71,5 @@ export class AuthComponent {
     });
 
   }
-
 
 }
