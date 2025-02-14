@@ -1,5 +1,10 @@
 <div class="row">
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+  <div *ngIf="error" class="alert alert-danger">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="col-xs-12 col-md-6 col-md-offset-3">
     <form #authForm='ngForm'>
       <div class="form-group">
         <label for="email">E-Mail</label>
@@ -15,4 +20,7 @@
       </div>
     </form>
   </div>
+
+  <div *ngIf="isLoading" class="lds-ring col-xs-12 col-md-6 col-md-offset-5"><div></div><div></div><div></div><div></div></div>
+
 </div>
