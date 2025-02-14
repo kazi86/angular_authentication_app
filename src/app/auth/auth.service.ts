@@ -1,5 +1,5 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {BehaviorSubject, catchError, Observable, Subject, throwError} from 'rxjs';
 import {UserModel} from './user.model';
 import {tap} from 'rxjs/operators';
@@ -43,12 +43,30 @@ export class AuthService{
     }));
   }
 
+  public autoLogin(){
+
+    let user = JSON.parse(localStorage.getItem('userData'));
+
+    if(!user){
+      return ;
+    }
+
+    const loadedUser = new UserModel(user.email,user.localId,user._token,new Date(user._tokenExpirationData));
+
+    if(loadedUser.token){
+      this.user.next(loadedUser);
+    }
+
+  }
+
   private authenticateUser(userData:AuthResponseData){
     let expirationDate = new Date(new Date().getTime() + +userData.expiresIn *1000);
 
     const user = new UserModel(userData.email,userData.localId,userData.idToken,expirationDate);
 
     this.user.next(user);
+
+    localStorage.setItem('userData',JSON.stringify(user));
 
   }
 
